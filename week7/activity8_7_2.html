@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform:rotate()</title>
+</head>
+<body>
+    <h3>클릭하면 90도 회전합니다</h3>
+    <hr>
+    <img src="media/spongebob.png" alt="스폰지밥 사진" onclick=rotate(this)>
+    <script>
+        //let imgArray = document.getElementsByTagName("img");
+        let degree = 0;
+        function rotate(obj){
+            degree+=90;
+            degree%=360;
+            let query = 'rotate('
+            query += degree;
+            query+='deg)'
+            obj.style.transform = query;
+            //obj.style.transform = "rotate("+degree+"deg)";
+            //아 문자열 덧셈 되지 맞다
+        }
+    </script>
+</body>
+</html>

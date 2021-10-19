@@ -1,0 +1,74 @@
+구글에 검색했을때
+검색을 하고 정렬하고 연관검색어를 띄우는 작업 -> 서버가 한 일 = Backend Program
+HTML을 클라이언트로 보내고 
+HTML CSS JS를 클라이언트에서 브라우저가 해석해서 화면을 띄움 = Frontend Program
+
+7장 웹 브라우저에서 제공하는 객체 중 HTML DOM
+
+Document/Browser object model
+
+Document(트리의 루트) - DOM 아님
+DOM - 각 HTML 태그를 객체화한 것 : html,head,body,title,p,form...
+트리 구조로 parent, child, sibling 등의 관계를 가짐
+-> 같은 태그가 있어도 태그마다 다른 객체가 생성됨
+parentElement , children, firstElemnetChild lastElementChild...
+
+브라우저는 HTML을 로드하여 각 HTML태그(<p>,<div>..)를 하나의 객체로 만듦
+HTML페이지는 DOM 트리와 객체들을 만들고 사라짐, 이 DOM을 제어하여 브라우저를 제어
+HTML 태그를 따라가며 순서대로 DOM을 만들기 때문에 DOM으로 객체를 제어하는 순서 주의
+
+HTML tag = element : 이름,property,css3 style,이벤트 리스너, 콘텐츠 의 5요소로 구성 
+-> DOM의 5 속성화
+DOM 5속성 : 프로퍼티, 메소드, 컬렉션, 이벤트리스너, Css3 스타일 (이퀄시메프)
+프로퍼티: 태그의 속성
+메소드: 태그를 제어할 수 있는 DOM에서 제공하는 함수
+컬렉션 : 객체의 주소(자식 객체 등) 등을 가지는 배열
+이벤트리스너: 작성된 이벤트 리스너 반영
+Css3 스타일: DOM 의 style 프로퍼티를 통해 HTML 태그 모양 제어
+
+opening tag와 closing tag 사이의 내용을 innerHTML(콘텐츠)이라고 한다.
+
+트리 프로퍼티nextElemntSibling, previousElementSibling 등등 (위에쓴거도있음)
+크기 위치 offsetHeight|Width|Left|TOP
+기본 id,lang,style,title,tagName(대문자로 DIV 와 같이 반환),innerHTML
+
+메소드들 
+get|setAttribute, add|removeEventListener, insertBefore,qwerySelector...
+BOM Browser 레벨에서 제공하는 라이브러리 : window navigator,history,location,screen
+
+스타일을 지정하는 방법은
+obj.style.backgroundColor = "grenn|007F00|rgb(0,127,0)"
+obj.style.cssText = "background-color : green" 두 가지 방법이 있다.
+
+셀렉터로 설정된 스타일은 다른 방식으로 읽어온다.
+obj.style.color 대신
+style = window.getComputedStyle(obj) // window는 document의 parent
+style.getPropertyValue("color")
+창에서 계산한 스타일 값을 받아와야 한다.
+
+document 객체 
+DOM 아님. style같은거 없음
+lastModifide나 readyState URL 등등의 프로퍼티가 있다.
+컬렉션으로 images links forms 등등이 있고
+메소드로 getElementsByTagName|ClassName|Name getElementById()//id는 유일
+id를 제외하면 다 배열을 반환함에 주의
+항상 매개변수 따옴표로 묶어야 함
+ addEventListener, close(쓰기중지)oepn(콘텐츠 지우고 새로 열기)
+ - 모든 HTML문서 내용을 로드하면 document 객체는 닫히기 때문에 write등을 사용할 때 주의
+ - 동적 제어 : 로드 완료 후 추가하고 싶으면 아래와 같이 한다.
+ DOM객체 생성
+ - let newOBJ = document.createElement("obj")
+ - newOBJ.setAttribute("id","myObj")
+ - newOBJ.style.color = "red"
+DOM 객체 삽입
+parent.appendChild(newOBJ);
+parent.insertBefore(newOBJ,OBJ);
+삭제도 당연히
+parent.removeChild(OBJ)등으로 가능하다. OBJ.parentElement로 가져오면 된다.
+
+
+createElement write() 등등이 있음
+writeln() 은 <br>이 아니라 공백으로 처리되기 때문에 줄바꿈 못합니다.
+- 시험공부
+
+
