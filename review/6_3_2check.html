@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>do</title>
+</head>
+<body>
+    <h3>document.write()로 표 만들기</h3>
+    <hr>
+</body>
+<script>
+    /*
+    먼저 테이블은 <table>로 열어서
+    <thead>로 제목열을 선언한 뒤에
+    <tfoot>으로 바닥열을 선언하고
+    <tr>로 각 행을 묶어서 tr 자식으로
+    <th> 인 강조열과 <td>인 일반열을 선언
+    기본적으로 border 없음
+    */
+    let i = 0;
+    document.write("<table border = 1em>");
+    document.write("<tr>");
+    document.write("<th>n</th>")
+    for(i=0;i<10;i++){
+        document.write("<td>"+i+"</td>")
+    }
+    document.write("</tr><tr>")
+    document.write("<th>n<sup>2</sup></th>")
+    for(i=0;i<10;i++){
+        document.write("<td>"+i*i+"</td>")
+    }
+    document.write("</tr>")
+    document.write("</table>");
+</script>
+</html>
