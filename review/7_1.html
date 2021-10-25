@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>난수 생성</h3>
+    <hr>
+    <script>
+        let arrayRand = Array(10);
+        let max = 0;
+        for(i=0;i<arrayRand.length;i++){
+            arrayRand[i] = Math.floor((Math.random())*100);
+            if(max<arrayRand[i])max=arrayRand[i];
+            document.write(arrayRand[i] + " ")
+        }
+        document.write("<br><hr>");
+        document.write("가장 큰 수는 " + max)
+        document.write("<br><hr>");
+        arrayRand.sort();
+        for(i=0;i<arrayRand.length;i++){
+            document.write(arrayRand[i] +" ")
+        }
+        document.write("<br><hr>");
+
+        let inputArray = Array(1,2,3,4,5)
+        //for(i=0;i<5;i++){
+        //    parseInt(inputArray[i]=prompt("숫자를 입력하세요 :  "+i+"개 째"));
+        //}
+        for(i=0;i<5;i++){
+            document.write(inputArray[i]+ " ");
+        }
+        document.write("<br>입력된 수열<hr>");
+        inputArray.reverse();
+        for(i=0;i<5;i++){
+            document.write(inputArray[i]+" ");
+        }
+        document.write("<br>뒤집힌 수열<hr>");
+        let now = new Date();
+        document.write(""+"현재 시간 : " + now.getHours() +"시 "+now.getMinutes()+"분 "+now.getSeconds()+"초 ");
+        if(now.getHours>=12){
+            document.body.style.backgroundColor = "#1A1ADD";
+        }
+        else document.body.style.backgroundColor = "rgb(30,30,50)";
+        if(now.getSeconds()%2 == 0)document.body.style.color = "gold";
+        else document.body.style.color = "gray";
+        document.write("<br><br>" + now.getDate()+"일 ");
+
+        switch(now.getDay()){
+            case 0 : 
+                document.write("<span style = 'color : pink'>일요일</span>");
+                break;
+            case 1 : 
+                document.write("<span style = 'color : green; font-size : 2em'>월요일</span>");
+                break;
+            case 2 : 
+                document.write("<span>화요일</span>");
+                break;
+            case 3 : 
+                document.write("<span>수요일</span>");
+                break;
+            case 4 : 
+                document.write("<span>목요일</span>");
+                break;
+            case 5 : 
+                document.write("<span>금요일</span>");
+                break;
+            case 6 : 
+                document.write("<span>토요일</span>");
+                break;
+        }
+        document.write("<hr>");
+        let names = new Array("예나","김하르미","김조은","태은우","홍해찬","배민희","최욱용");
+        let fasterName = names[0]
+        let longerName = names[0]
+        
+        for(i=0;i<names.length;i++){
+            document.write(names[i]+" ");
+            if(fasterName>names[i])fasterName=names[i];
+            if(longerName.length<names[i].length)longerName=names[i];
+        }
+        document.write("<br> 가장 긴 이름은 : "+longerName+"<br> 가장 먼저 나오는 이름은 : "+fasterName+"<br>");
+        names.sort();
+        for(i=0;i<names.length;i++){
+            document.write(names[i]+" ");
+        }
+        document.write("<hr>");
+        let inputStr = "query = java & id = 5 & who = kitae & target = _blank"
+        let cutArray = inputStr.split("&");
+        for(i=0;i<cutArray.length;i++){
+            document.write(cutArray[i]+"<br>");
+        }
+        document.write("<hr>");
+        let colorNames = [ 
+            "maroon", "red", "orange", "yellow", "olive", "purple", 
+            "fuchsia", "white", "lime", "green",
+            "navy", "blue", "aqua", "teal", "black", "silver", "gray"
+        ];
+        for(i=0;i<colorNames.length;i++){
+            document.write("<div style = 'display : inline-block; height : 2em; width : 4em; background-color : "+colorNames[i]+"'>"+colorNames[i]+"</div>")
+        }
+        document.write("<hr>");
+        let randColors = Array(16);
+        for(i=0;i<randColors.length;i++){
+            let str = "rgb("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+")"
+            document.write("<div style = 'display : inline-block; height : 2em; width : 12em; background-color : "+str+"'>"+str+"</div>");
+        }
+        document.write("<hr>");
+        class Book{
+            constructor(title,author,price){
+                this.title = title;
+                this.author = author;
+                this.price = parseInt(price); 
+            }
+        }
+        let book1 = new Book("HTML5","황기태",20000);
+        document.write("book1 : "+book1.title+", "+book1.author+", "+book1.price+"<br>")
+        document.write("<hr>");
+        let bookInput = ["HTML5,황기태,200000","CSS3,이재문,50000","Java,한원선,30000","스폰지밥,Grace,60000","C++,Kitae,25000"];
+        let bookArray = Array(5);
+        for(i=0;i<bookInput.length;i++){
+            let classArr = bookInput[i].split(",");
+            let newBook = new Book(classArr[0],classArr[1],classArr[2]);
+            bookArray[i] = newBook;
+        }
+        let maxpriceIndex =0;
+        for(i=0;i<bookArray.length;i++){
+            document.write(bookArray[i].title+", "+bookArray[i].author+", "+bookArray[i].price+"<br>");
+            if(bookArray[i].price>bookArray[maxpriceIndex].price)maxpriceIndex=i;
+        }
+        document.write("<hr>가장 비싼 책은 "+bookArray[maxpriceIndex].title+", "+bookArray[maxpriceIndex].author+", "+bookArray[maxpriceIndex].price+"<br>");
+
+    </script>
+</body>
+</html>
