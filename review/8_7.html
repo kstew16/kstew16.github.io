@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="media/spongebob.png" alt="스폰지밥 사진" onclick=rotate(this)>
+    <script>
+        
+        
+        let deg = 0;
+        let size =1;
+        function rotate(obj){
+            deg +=90;
+            deg%=360;
+            //obj.style.transform = ;
+            size +=0.1;
+            obj.style.transform = "rotate("+(deg)+"deg) " + "scale("+size+",1)";
+        }
+
+    </script>
+</body>
+</html>

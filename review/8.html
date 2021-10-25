@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>집에 가고 싶다</h3>
+    <hr>
+    <button onclick = addBorder();>border</button>
+    <button margin = 1px; onclick = countP();>p</button>
+    <button onclick = showHide()>show/Hide</button>
+    <ol type = "A" onclick ="this.style.backgroundColor='yellow'">
+        <li>일단 청량리까지 버스를 타고</li>
+        <li>경의중앙타고</li>
+        <li><span style = "color : blue;" >이촌</span>에서 <span style = "color : blue">평촌</span>가서</li>
+        <li id = "myLi">집에갑니다.</li>
+    </ol>
+    <ol type = "A" onclick=addNew(this)  style = "background-color :yellowgreen">
+        <li>와 직접 만드는 프로퍼티!</li>
+    </ol>
+    <p> 2 + 4 = <span onclick = "this.innerHTML = eval(2+4)">답</span></p>
+    <p> 4 * 20 + 64 = <span onclick = "this.innerHTML = eval(4 * 20 + 64)">답</span></p>
+    <p> 20/5-8*2 = <span onclick = "this.innerHTML = eval(20/5-8*2)">답</span></p>
+    <p onclick=activate(this)>이거 누르면 가동됨</p>
+    <img src="media/spongebob.png" alt="스폰지밥 사진" onclick=rotate(this)>
+    <script>
+        function addBorder(){
+            let miLi = document.getElementById("myLi");
+            miLi.style.border = "2px dotted violet"
+        }
+        function countP(){
+            let ps = document.getElementsByTagName("li");
+            alert(ps.length + "개의 li가 있네요");
+        }
+        function showHide(){
+            let spanArr = document.getElementsByTagName("span");
+            let computedStyle = window.getComputedStyle(spanArr[0]);
+            let vvlt = computedStyle.getPropertyValue("visibility");
+            if(vvlt=="visible"){
+                spanArr[0].style.visibility = "hidden"
+                spanArr[1].style.visibility = "hidden"
+            }
+            else {
+                spanArr[0].style.visibility = "visible"
+                spanArr[1].style.visibility = "visible"
+            }
+        }
+        function changeColor(obj){
+            obj.style.backgroundColor = "yellow";
+        }
+        let lis = document.getElementsByTagName("li");
+        for(i=0;i<lis.length;i++){
+            lis[i].style.color ="green"
+        }
+        function activate(obj){
+            obj.innerHTML = "<span style='color:red'>몇 번을 말했어</span> 집에가고싶다고"
+        }
+        let deg = 0;
+        let size =1;
+        function rotate(obj){
+            deg +=90;
+            deg%=360;
+            //obj.style.transform = ;
+            size +=0.1;
+            obj.style.transform = "rotate("+(deg)+"deg) " + "scale("+size+",1)";
+        }
+        function addNew(obj){
+            let newLi = document.createElement("li")
+            let inputText = prompt("뭘 넣어드릴까요");
+            newLi.innerHTML = inputText;
+            obj.appendChild(newLi);
+        }
+    </script>
+</body>
+</html>

@@ -7,22 +7,20 @@
     <title>Document</title>
 </head>
 <body>
+    <h3>저의 실험입니다.</h3>
+    <hr>
+    <p>
+        이곳은 p입니다.
+    </p>
     <script>
-        class Book{
-            constructor(author,price){
-                this.author = author;
-                this.price = price
-                this.isBurnt = false;
-                this.burnItUp = function(times){
-                    this.isBurnt = true;
-                    let string = times + " times " + this.isBurnt
-                    return string 
-                }
-            }
-            
-        }
-        let bookA = new Book("태은우",5000)
-        document.write(bookA.burnItUp(3));
+        let newDiv = document.createElement("div");
+        newDiv.innerHTML = "새로 만든 컨텐츠입니다."
+        newDiv.setAttribute("id","newDiv");
+        //newDiv.setAttribute("style","color : 'red';");//어트리뷰트아니네요
+        newDiv.style.color = 'red';
+        let pArr = document.getElementsByTagName("p");
+        pArr[0].appendChild(newDiv);
+        document.body.removeChild(pArr[0]);//아유 잘지워진다
     </script>
 </body>
 </html>

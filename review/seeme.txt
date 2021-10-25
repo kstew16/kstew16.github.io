@@ -2,3 +2,31 @@ floor, random등의 코어 객체에서 메소드 사용할 떄
 앞에 꼭 Math.붙이기. floor에서 자꾸 까먹네
 
 따옴표 안에 따옴표 쓸 때 다른 거 쓰기
+
+사전순은 앞에 나올 수로 작은 거 취급
+
+클래스로 만들때 매개변수는 생성자에만 있음
+클래스 작성법 반드시 reCheck 할 것.
+
+split 하면 string형식으로 반환된다
+정수인 프로퍼티를 입력받을때는 parseInt()써주기
+
+페이지 로드가 되기 전에 스크립트가 작동하면 생성되지 않은 객체에 접근하기도 하고
+페이지 로드 시간이 상대적으로 길어지니
+<script>는 body 최하단에 위치하는것을 추천
+
+괜히 리스너로 하지 말고 아예 태그에 <tag onclick ="this.style">해줘..
+
+style = "color : yellow" yellow에 뭐 씌우면 조짐
+
+newP.onclick = function (){
+                    var p = this.parentElement;
+                    p.removeChild(this);
+                }
+insertBefore(obj,뒤에올거);
+
+parentElement
+previousElementSibling
+nextElementSibling
+first|lastElementChild
+children
