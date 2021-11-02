@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>onmouseover</title>
+    <style>
+        img{ position: absolute;}
+    </style>
+</head>
+<body>
+    <h3>이미지 커서 만들기</h3>
+    <hr>
+    <div>마우스를 움직이면 이미지로 만든 커서가 마우스를 따라 다닙니다.</div>
+    <div><img src="media/spongebob.png" alt="스폰지밥" width="30px" height="30px"></div>
+    <script>
+        document.onmousemove = move;
+        let img = document.getElementsByTagName("img")
+        function move(e){
+            let str1= e.clientX
+            let str2= e.clientY
+            str1=str1+"px"
+            str2 = str2 + "px"
+            img[0].style.left = str1
+            img[0].style.top = str2
+            
+        }
+    </script>
+</body>
+</html>

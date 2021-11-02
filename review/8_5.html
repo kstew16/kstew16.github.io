@@ -19,13 +19,15 @@
         <img src="media/spade-7.png" width="100" height="140" alt="스페이드7">
     </div>
     <script>
+        
         let imgs = document.getElementsByTagName("img");
         for(i=0;i<imgs.length;i++){
             img = imgs[i];
             img.style.width = "140px"
             img.style.height = "200px"
             img.style.zIndex = i;
-            img.onclick = changeZ2;
+            //img.onclick = changeZ;
+            img.addEventListener("click",changeZ)
         }
 
         function changeZ(){
