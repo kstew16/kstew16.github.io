@@ -32,13 +32,13 @@ td {
         let interID = null;
         let timerID = null;
         function calc(interID) {
-            var total = 0;
-            var qArray = document.getElementsByClassName("question");
-            var aArray = document.getElementsByClassName("answer");
+            let total = 0;
+            let qArray = document.getElementsByClassName("question");
+            let aArray = document.getElementsByClassName("answer");
             for(i=0; i<qArray.length; i++) {
-                var question = qArray[i].innerHTML;
-                var correctAnswer = Math.floor(eval(question));
-                var userAnswer = aArray[i].value;
+                let question = qArray[i].innerHTML;
+                let correctAnswer = Math.floor(eval(question));
+                let userAnswer = aArray[i].value;
                 if(userAnswer=="" || isNaN(userAnswer)) {// 답이 없거나 문자가 입력된 경우
                     total += 0;
                     qArray[i].style.textDecoration = "line-through";
@@ -69,13 +69,13 @@ td {
             }
             interID = setInterval(timer,1000,startTime);
             timerID = setTimeout(calc,10000,interID);
-            var qArray = document.getElementsByClassName("question");
-            var aArray = document.getElementsByClassName("answer");
+            let qArray = document.getElementsByClassName("question");
+            let aArray = document.getElementsByClassName("answer");
             for(i=0; i<qArray.length; i++) {
-                var number1 = Math.floor(Math.random()*20)+1;
-                var number2 = Math.floor(Math.random()*20)+1; // 결코 0이 될 수 없음
-                var op = Math.floor(Math.random()*4);
-                var operator="+"; // 디폴트
+                let number1 = Math.floor(Math.random()*20)+1;
+                let number2 = Math.floor(Math.random()*20)+1; // 결코 0이 될 수 없음
+                let op = Math.floor(Math.random()*4);
+                let operator="+"; // 디폴트
                 switch(op) {
                     case 0 : operator = "+"; break;
                     case 1 : operator = "-"; break;
