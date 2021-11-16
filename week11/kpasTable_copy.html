@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재난문자발령 테이블로드</title>
+</head>
+<body>
+    잠시 후에 로드됩니다...
+</body>
+<script>
+    var xhr = new XMLHttpRequest();
+    var url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'oaXeVfWtlmMq%2FMVsfEXxkMocbaeAD88XfN9GtwY6NWMbMVLiQFrB0%2F2IbNYCBqyqZJiCUzCe8cIK2Asx3QYHHg%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('30'); /**/
+    queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+    xhr.open('GET', url + queryParams);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            let xml = this.responseXML
+            let tableString = ""
+            document.write("<table border = 1em>");
+            document.write("<tr>");
+            document.write("<th>create_date</th><th>location_id</th><th>location_name</th><th>md101_sn</th><th>msg</th>")
+            let rows = xml.getElementsByTagName("row");
+            let dates = xml.getElementsByTagName("create_date");
+            let locationIds = xml.getElementsByTagName("location_id");
+            let locationNames = xml.getElementsByTagName("location_name");
+            let sns = xml.getElementsByTagName("md101_sn");
+            let msgs = xml.getElementsByTagName("msg")
+            for(i=0;i<rows.length;i++){
+                tableString = "<tr>"
+                tableString += "<td>"+dates[i].childNodes[0].nodeValue+"</td><td>"+locationIds[i].childNodes[0].nodeValue+"</td><td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+sns[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>"
+                document.write(tableString)
+            }
+        }
+    };
+    xhr.send('');
+    
+    
+</script>
+</html>
