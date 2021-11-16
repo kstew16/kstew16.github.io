@@ -24,16 +24,18 @@
             let tableString = "";
             document.write("<table border = 1em>");
             document.write("<tr>");
-            document.write("<th>create_date</th><th>location_id</th><th>location_name</th><th>md101_sn</th><th>msg</th>");
+            //document.write("<th>create_date</th><th>location_id</th><th>location_name</th><th>md101_sn</th><th>msg</th>");
+            document.write("<th>location_name</th><th>msg</th>");
             let rows = xml.getElementsByTagName("row");
-            let dates = xml.getElementsByTagName("create_date");
-            let locationIds = xml.getElementsByTagName("location_id");
+            //let dates = xml.getElementsByTagName("create_date");
+            //let locationIds = xml.getElementsByTagName("location_id");
             let locationNames = xml.getElementsByTagName("location_name");
-            let sns = xml.getElementsByTagName("md101_sn");
+            //let sns = xml.getElementsByTagName("md101_sn");
             let msgs = xml.getElementsByTagName("msg");
             for(i=0;i<rows.length;i++){
                 tableString = "<tr>";
-                tableString += "<td>"+dates[i].childNodes[0].nodeValue+"</td><td>"+locationIds[i].childNodes[0].nodeValue+"</td><td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+sns[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>";
+                //tableString += "<td>"+dates[i].childNodes[0].nodeValue+"</td><td>"+locationIds[i].childNodes[0].nodeValue+"</td><td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+sns[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>";
+                tableString += "<td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>";
                 document.write(tableString);
             }
         }
