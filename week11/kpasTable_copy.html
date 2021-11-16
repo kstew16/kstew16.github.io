@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,23 +18,25 @@
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('30'); /**/
     queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
     xhr.open('GET', url + queryParams);
-    document.write(url+queryParams);
+    //document.write(url+queryParams);
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            let xml = this.responseXML;
+            let xml = this.responseXML
             let tableString = "";
             document.write("<table border = 1em>");
             document.write("<tr>");
-            document.write("<th>create_date</th><th>location_id</th><th>location_name</th><th>md101_sn</th><th>msg</th>")
+            //document.write("<th>create_date</th><th>location_id</th><th>location_name</th><th>md101_sn</th><th>msg</th>");
+            document.write("<th>location_name</th><th>msg</th>");
             let rows = xml.getElementsByTagName("row");
-            let dates = xml.getElementsByTagName("create_date");
-            let locationIds = xml.getElementsByTagName("location_id");
+            //let dates = xml.getElementsByTagName("create_date");
+            //let locationIds = xml.getElementsByTagName("location_id");
             let locationNames = xml.getElementsByTagName("location_name");
-            let sns = xml.getElementsByTagName("md101_sn");
+            //let sns = xml.getElementsByTagName("md101_sn");
             let msgs = xml.getElementsByTagName("msg");
             for(i=0;i<rows.length;i++){
                 tableString = "<tr>";
-                tableString += "<td>"+dates[i].childNodes[0].nodeValue+"</td><td>"+locationIds[i].childNodes[0].nodeValue+"</td><td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+sns[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>";
+                //tableString += "<td>"+dates[i].childNodes[0].nodeValue+"</td><td>"+locationIds[i].childNodes[0].nodeValue+"</td><td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+sns[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>";
+                tableString += "<td>"+locationNames[i].childNodes[0].nodeValue+"</td><td>"+msgs[i].childNodes[0].nodeValue+"</td></tr>";
                 document.write(tableString);
             }
         }

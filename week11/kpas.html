@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>재난문자발령 샘플코드</title>
 </head>
 <body>
-    30초 후에 로드됩니다
+    잠시 후 로드됩니다.
 </body>
 <script>
     let xhr = new XMLHttpRequest();
@@ -18,7 +19,7 @@
     queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
     let fullQuery = url + queryParams;
     xhr.open('GET', fullQuery);
-    document.write(fullQuery);
+    //document.write(fullQuery);
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
