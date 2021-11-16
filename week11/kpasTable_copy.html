@@ -10,9 +10,9 @@
     잠시 후에 로드됩니다...
 </body>
 <script>
-    var xhr = new XMLHttpRequest();
-    var url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
-    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'oaXeVfWtlmMq/MVsfEXxkMocbaeAD88XfN9GtwY6NWMbMVLiQFrB0/2IbNYCBqyqZJiCUzCe8cIK2Asx3QYHHg=='; /*Service Key*/
+    let xhr = new XMLHttpRequest();
+    let url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
+    let queryParams = '?' + encodeURIComponent('serviceKey') + '='+'oaXeVfWtlmMq/MVsfEXxkMocbaeAD88XfN9GtwY6NWMbMVLiQFrB0/2IbNYCBqyqZJiCUzCe8cIK2Asx3QYHHg=='; /*Service Key*/
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('30'); /**/
     queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
