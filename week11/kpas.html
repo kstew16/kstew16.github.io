@@ -16,8 +16,9 @@
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
     queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
-    xhr.open('GET', url + queryParams);
-    document.write(url+queryParams);
+    let fullQuery = url + queryParams;
+    xhr.open('GET', fullQuery);
+    document.write(fullQuery);
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
