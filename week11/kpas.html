@@ -19,7 +19,7 @@
     xhr.open('GET', url + queryParams);
     document.write(url+queryParams);
     xhr.onreadystatechange = function () {
-        if (this.readyState == 4) {
+        if (this.readyState == 4 && this.status == 200) {
             alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
         }
     };
