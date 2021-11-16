@@ -17,8 +17,7 @@
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
     queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
-    let fullQuery = url + queryParams;
-    xhr.open('GET', fullQuery);
+    xhr.open('GET',url + queryParams);
     //document.write(fullQuery);
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
