@@ -7,22 +7,25 @@
     <title>재난문자발령 샘플코드</title>
 </head>
 <body>
-    30초 후에 로드됩니다
+    
+    <button type="button" onclick="loadTable()">버튼을 누르면 로드 주소가 뜨고 잠시 후 로드됩니다.</button>
 </body>
 <script>
-    let xhr = new XMLHttpRequest();
-    let url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
-    let queryParams = '?' + encodeURIComponent('serviceKey') + '='+'oaXeVfWtlmMq/MVsfEXxkMocbaeAD88XfN9GtwY6NWMbMVLiQFrB0/2IbNYCBqyqZJiCUzCe8cIK2Asx3QYHHg=='; /*Service Key*/
-    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
-    queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
-    xhr.open('GET', url + queryParams);
-    document.write(url+queryParams);
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
-        }
-    };
-    xhr.send('');
+    function loadTable(){
+        let xhr = new XMLHttpRequest();
+        let url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
+        let queryParams = '?' + encodeURIComponent('serviceKey') + '='+'oaXeVfWtlmMq/MVsfEXxkMocbaeAD88XfN9GtwY6NWMbMVLiQFrB0/2IbNYCBqyqZJiCUzCe8cIK2Asx3QYHHg=='; /*Service Key*/
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+        queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+        xhr.open('GET', url + queryParams);
+        document.write(url+queryParams);
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
+            }
+        };
+        xhr.send('');
+    }
 </script>
 </html>
