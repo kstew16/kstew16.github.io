@@ -104,6 +104,17 @@ function startDataLayer() {
         } else {
             feature.setProperty('focus', false);
         }
+        /*
+        if (feature.getProperty('focus') !== true) {
+            map.data._features.forEach(
+                function(feature){
+                    feature.setProperty('focus,false');
+                }
+            )
+        } else {
+            feature.setProperty('focus', false);
+        }
+        */
     });
 
 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>튜토리얼1</title>
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    
+    <!-- naver map -->
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gslzy2klbe"></script>
+
+</head>
+<body>
+<div id="map" style="width:80%;height:1000px;"></div>
+<div id="table"></div>
+<script>
+// map 객체 선언
+// naver.maps 식별자를 가진(네임스페이스에 속한)
+// 객체 생성을 위한 Map 클래스 생성자 호출 
+var map = new naver.maps.Map(document.getElementById('map'), {
+    zoom: 18,// 줌 정도
+    mapTypeId: 'normal', // 지도형식 일반
+    center: new naver.maps.LatLng(37.3586524, 127.1060678) // 네이버 그린팩토리 좌표
+});
+
+// 프로그램에서 참조할 데이터들이 있는 기본 경로 설정
+var HOME_PATH = "https://navermaps.github.io/maps.js/docs"
+
+// 지도가 로드된 다음에 일회성으로 실행되는 이벤트 메소드 호출
+naver.maps.Event.once(map, 'init_stylemap', function () {
+    $.ajax({
+        // 홈 경로에 더해서 init_stylemap 데이터 Ajax로 map에 json 타입으로 수신, 
+        // 성공시 startDataLayer 함수 호출
+        url: HOME_PATH +'/data/naver.json',
+        dataType: 'json',
+        success: startDataLayer
+    });
+});
+
+function startDataLayer(geojson) {
+    var dump = map.data;
+    // map.data 객체는 Data 클래스
+    // map 객체의 data 프로퍼티의 addGeoJson 메소드 호출, 인수는 geojson
+    map.data.addGeoJson(geojson);
+    // map 객체의 data 프로퍼티의 setStyle 메소드 호출하며
+    // setStyle의 매개 변수로 전달될 데이터를 반환하는 익명 메소드 호출, feature 객체
+    map.data.setStyle(function(feature) {
+        var color = 'red';
+
+        if (feature.getProperty('isColorful')) {
+            color = feature.getProperty('color');
+        }
+
+        return {
+            fillColor: color,
+            strokeColor: color,
+            strokeWeight: 2,
+            icon: null
+        };
+    });
+    
+    map.data.addListener('click', function(e) {
+        e.feature.setProperty('isColorful', true);
+    });
+
+    map.data.addListener('dblclick', function(e) {
+        var bounds = e.feature.getBounds();
+
+        if (bounds) {
+            map.panToBounds(bounds);
+        }
+    });
+
+    map.data.addListener('mouseover', function(e) {
+        map.data.overrideStyle(e.feature, {
+            strokeWeight: 8,
+            icon: HOME_PATH +'/img/example/pin_spot.png'
+        });
+    });
+
+    map.data.addListener('mouseout', function(e) {
+        map.data.revertStyle();
+    });
+}
+
+
+</script>
+</body>
+</html>
