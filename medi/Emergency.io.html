@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Emergency.io</title>
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    
+    <!-- naver map -->
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gslzy2klbe"></script>
+
+    <!--Geocoder-->
+    <!--현위치 좌표-> 주소로 변환용 -->
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gslzy2klbe&submodules=geocoder"></script>
+    <style>
+        div{
+            float: left;
+            margin: 0px;
+        }
+        body{ -ms-overflow-style: none; } 
+        ::-webkit-scrollbar { display: none; } /*특정 부분 스크롤바 없애기*/ 
+        .box{ -ms-overflow-style: none; } 
+        .box::-webkit-scrollbar{ display:none; }
+
+    </style>
+</head>
+<body style="margin: 0px;">
+<div id="map" style="width:50vw; height:100vh; margin:0px; display: inline-block;"></div>
+<div id="table" style="width: 35vw; height: 100vh; overflow: auto;"></div>
+<div id="sideNav" style="width: 10vw; height: 10vh;">
+    <div style="width: 10vw; text-align: center;">Emergency.io img</div>
+    <div></div>
+</div>
+<button id="currentLocation" onclick="setCenterToCurrent()">현위치</button>
+<script>
+
+var HOME_PATH = "https://navermaps.github.io/maps.js/docs",
+    urlPrefix = HOME_PATH +'/data/region',
+    urlSuffix = '.json',
+    regionGeoJson = [],
+    loadCount = 0;
+
+var map = new naver.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    mapTypeId: 'normal',
+    center: new naver.maps.LatLng(36.4303004, 127.817960)
+});
+
+
+
+// 지도가 로드된 다음에 일회성으로 실행되는 이벤트
+naver.maps.Event.once(map, 'init_stylemap', function () {
+    for (var i = 1; i < 18; i++) {
+        var keyword = i +'';
+
+        if (keyword.length === 1) {
+            keyword = '0'+ keyword;
+        }
+        // 01, 02, 03 생성
+
+        $.ajax({
+            url: urlPrefix + keyword + urlSuffix,
+            success: function(idx) {
+                return function(geojson) {
+                    regionGeoJson[idx] = geojson;
+
+                    loadCount++;
+                    // 17개 다 받아오면 그리기 시작
+                    if (loadCount === 17) {
+                        startDataLayer();
+                    }
+                }
+            }(i - 1)
+        });
+    }
+});
+
+var tooltip = $('<div style="position:absolute;z-index:1000;padding:5px 10px;background-color:#fff;border:solid 2px #000;font-size:14px;pointer-events:none;display:none;"></div>');
+tooltip.appendTo(map.getPanes().floatPane);
+
+
+function startDataLayer() {
+
+    map.data.setStyle(function(feature) {
+        
+        // 기본 라인 
+        var styleOptions = {
+            fillColor: '#ff0000',
+            fillOpacity: 0.0001,
+            strokeColor: '#ff0000',
+            strokeWeight: 2,
+            strokeOpacity: 0.4
+        };
+
+        // 마우스 올라갔을 떄 스타일
+        if (feature.getProperty('focus')) {
+            styleOptions.fillOpacity = 0.6;
+            styleOptions.fillColor = '#0f0';
+            styleOptions.strokeColor = '#0f0';
+            styleOptions.strokeWeight = 4;
+            styleOptions.strokeOpacity = 1;
+        }
+
+        return styleOptions;
+    });
+
+    // 제가 받아온 Geojson파일을 map.data
+    regionGeoJson.forEach(function(geojson) {
+        map.data.addGeoJson(geojson);
+    });
+
+    map.data.addListener('click', function(e) {
+        var feature = e.feature;
+
+        // 여기서 다른 선택된 지역 있는지 지워줘야 됩니당
+        // 지워주는 방법은
+        // map.data._features 를 foreach 하면서 focus 끄시면 됩니다.
+        if (feature.getProperty('focus') !== true) {
+            //document.getElementById("table").innerHTML = feature.getProperty('area1');
+            getLocationMessage(feature.getProperty('area1'))
+            //feature.setProperty('focus', true);
+        } else {
+            feature.setProperty('focus', false);
+        }
+        /*
+        if (feature.getProperty('focus') !== true) {
+            map.data._features.forEach(
+                function(feature){
+                    feature.setProperty('focus,false');
+                }
+            )
+        } else {
+            feature.setProperty('focus', false);
+        }
+        */
+    });
+
+
+    map.data.addListener('mouseover', function(e) {
+        
+        // 이름을 받아
+        var feature = e.feature,
+            regionName = feature.getProperty('area1');
+            // 강원도
+
+        // 지역명 뜨는거 
+        tooltip.css({
+            display: '',
+            left: e.offset.x,
+            top: e.offset.y
+        }).text(regionName);
+
+        map.data.overrideStyle(feature, {
+            fillOpacity: 0.6,
+            strokeWeight: 4,
+            strokeOpacity: 1
+        });
+    });
+
+    map.data.addListener('mouseout', function(e) {
+        // 툴팁 사라지게 하고
+        tooltip.hide().empty();
+
+        // 스타일 원상복귀시키는
+        map.data.revertStyle();
+    });
+}
+
+function getLocationMessage(location_name){
+    var xhr = new XMLHttpRequest();
+    var url = 'http://apis.data.go.kr/1741000/DisasterMsg4/getDisasterMsg2List'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'oaXeVfWtlmMq%2FMVsfEXxkMocbaeAD88XfN9GtwY6NWMbMVLiQFrB0%2F2IbNYCBqyqZJiCUzCe8cIK2Asx3QYHHg%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /**/
+    queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+    queryParams += '&' + encodeURIComponent('create_date') + '=' + encodeURIComponent('2021/06/22 00:00:00'); /**/
+    queryParams += '&' + encodeURIComponent('location_name') + '=' + encodeURIComponent(location_name); /**/
+    xhr.open('GET', url + queryParams);
+    //document.write(url+queryParams);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            let xml = this.responseXML;
+            let tableDiv = document.getElementById("table");
+            let locTable = document.createElement("table");
+            
+            //테이블 스타일 설정
+            locTable.style.border = "1px solid";
+            locTable.style.borderCollapse = "collapse";
+
+            // 헤더 생성
+            let header = locTable.createTHead();
+            let headRow = header.insertRow();
+            //headRow.style.border = "2px solid"
+            let headLoc = headRow.insertCell(0);
+            let headMsg = headRow.insertCell(1);
+            
+            //헤더 스타일 설정
+            headLoc.style.border = "2px solid"
+            headLoc.style.backgroundColor = "gray"
+            headMsg.style.border = "2px solid"
+            headMsg.style.backgroundColor = "gray"
+            headRow.style.fontWeight = "bold"
+
+            headLoc.innerHTML = "지역";
+            headMsg.innerHTML = "메시지";
+
+            //수신한 데이터 사용 준비
+            let rows = xml.getElementsByTagName("row");
+            let locationNames = xml.getElementsByTagName("location_name");
+            let msgs = xml.getElementsByTagName("msg");
+
+            for(i=0;i<rows.length;i++){
+                // 텍스트 거르기 여기서 msgs[i].childNodes[0].nodeValue; 보고 continue 때리면 됨
+                
+                //for문을 통해 받은 열만큼의 데이터 출력
+                let row = locTable.insertRow();
+                let cellLoc = row.insertCell(0);
+                let cellMsg = row.insertCell(1);
+                //각 셀의 스타일 설정
+                cellLoc.style.border = "1px solid"
+                cellMsg.style.border = "1px solid"
+                if(i%2==1){
+                    //가독성 향상
+                    row.style.backgroundColor = "lightGray"
+                }
+                
+                cellLoc.innerHTML = locationNames[i].childNodes[0].nodeValue;
+                cellMsg.innerHTML = msgs[i].childNodes[0].nodeValue;
+            }
+            
+            // 새로 로드할 때 테이블이 겹치지 않게
+            // 더보기 처리는 나중에 여기에서
+            for(i=0;i<tableDiv.childElementCount;i++){
+                tableDiv.removeChild(tableDiv.firstChild);
+            }
+            // 더보기 변수 끄는거 잊지 말고
+            tableDiv.appendChild(locTable);
+        }
+    };
+    xhr.send('');
+}
+
+</script>
+</body>
+</html>
